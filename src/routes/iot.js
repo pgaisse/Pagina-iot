@@ -3,7 +3,7 @@ const Sensor    =   require('../models/Iot');
 const Meas    =   require('../models/Meas');
 const { v4: uuidv4 } = require('uuid');
 const {isAuthenticated} = require('../helpers/auth');
-var params={};
+var params={}, paramsall={}, limit=10 ;
 const mqtt     =   require('mqtt');
 const top={};
 
@@ -15,21 +15,34 @@ router.get('/iot/add', isAuthenticated, async (req, res)=>{
 });
 
 router.get('/iot/all-messages',isAuthenticated, async (req, res)=>{
+    limit= req.query.limit || 10;
     const user= req.user.id;
     const topicos = await Sensor.distinct("topic", {"user":user});
-    res.render('iot/all-messages',{topicos: topicos});
+    const sensors= await Meas.paginate(paramsall,{lean:true, limit:limit,sort:{$natural:-1}}) 
+    res.render('iot/all-messages', { sensors: sensors, topicos:topicos})
 });
 
+
 router.post('/iot/all-messages', isAuthenticated, async (req, res)=>{
-    const {topic,vmin,vmax, date1, date2}=req.body;
-    var dateiso1=new Date(date1);
-    var dateiso2=new Date(date2);
-    console.log(dateiso1)
+    var {topic,vmin,vmax, date1, date2}=req.body;
     const errors=[]; 
     
     if (!topic){
         errors.push({text: 'Por favor ingrese un tópico'});
     }   
+    if (!vmin){
+        vmin=-99999999;
+    }   
+    if (!vmax){
+        vmax=999999999;
+    }
+
+    if (!date1){
+        errors.push({text: 'Por favor ingrese la fecha de inicio'});
+    }  
+    if (!date2){
+        errors.push({text: 'Por favor ingrese la fecha de término'});
+    }  
     const topicos = await Sensor.distinct("topic");
     if(errors.length > 0){
         res.render('iot/all-messages',{
@@ -40,16 +53,13 @@ router.post('/iot/all-messages', isAuthenticated, async (req, res)=>{
 
     }
     else{
+        var dateiso1=new Date(date1);
+        var dateiso2=new Date(date2);
         const user= req.user.id;
         params={topic:topic};
-       // const topic = await Sensor.distinct("topic", {"user":user});
-        //const sensors = await Meas.find({topic}).sort({$natural:-1}).limi(count).lean();
-        const sensors = await Meas.find({value:{$gte: vmin, $lte: vmax} ,topic:topic ,date:{ $gte:dateiso1,$lte:dateiso2}}).sort({$natural:-1}).lean();
-        console.log(sensors)
-        res.render('iot/all-messages', { sensors: sensors, topicos:topicos}) 
-    
-        
-    
+        paramsall={value:{$gte: vmin, $lte: vmax} ,topic:topic ,date:{ $gte:dateiso1,$lte:dateiso2}};
+        const sensors= await Meas.paginate(paramsall,{lean:true, limit:limit,sort:{$natural:-1}}) 
+        res.render('iot/all-messages', { sensors: sensors, topicos:topicos})
     }
 
 
@@ -59,8 +69,9 @@ router.post('/iot/all-messages', isAuthenticated, async (req, res)=>{
 
 router.get('/iot', isAuthenticated, async (req, res)=>{
     const user= req.user.id;
+    const sensors= await Meas.paginate(paramsall,{lean:true, limit:limit,sort:{$natural:-1}}) 
     const topicos = await Sensor.distinct("topic", {"user":user});
-    res.render('iot/all-messages',{topicos: topicos});
+    res.render('iot/all-messages',{sensors:sensors,topicos: topicos});
 });
 
 router.post('/iot/new-reg', isAuthenticated, async (req,res)=>{
@@ -173,22 +184,20 @@ router.post('/iot/new-sensor', isAuthenticated, async (req, res)=>{
   
 })
 
-router.get('/iot/all', async (req, res)=>{
-    const user= req.user.id;
-    const topicos = await Sensor.distinct("topic", {"user":user});
-    res.render('iot/all-messages',{topicos: topicos});
-});
+
+
+
 
 router.get('/iot/new-sensor', isAuthenticated, async (req, res)=>{
     res.render('iot/new-sensor');
-    console.log(uuidv4());
+    //console.log(uuidv4());
 })
 
 router.get('/iot/all-ajax',isAuthenticated,async (req, res)=>{
     const user= req.user.id;
 
     const topicos = await Sensor.distinct("topic", {"user":user});
-    console.log(top)
+    //console.log(top)
     const sensors = await Meas.find(params).sort({$natural:-1}).limit(1);
 
     res.json({sensors,topicos});
@@ -197,10 +206,11 @@ router.get('/iot/all-ajax',isAuthenticated,async (req, res)=>{
 
 router.get('/iot/panel', isAuthenticated, async (req, res)=>{
     const user=req.user.id;
+    const name=req.user.name;
     const query = await Sensor.distinct("topic");
-    console.log("consulta",query);
+    //console.log("consulta",query);
     const sensors = await Sensor.find({user:user, topic:query}).limit(query.length).lean();
-    res.render('iot/panel',{sensors});
+    res.render('iot/panel',{sensors,name});
 })
 module.exports  =   router;
 

@@ -4,7 +4,6 @@ var topicc, sensorn;
 const Arry=[];
 const Arrx=['', '','','','','','','','',''];
 const estado=['OFF','ON'];
-
 $(document).on("change",'#myRange', function (e){
     let res=e.target.value;
     $('#slidelabel').text(res);
@@ -22,7 +21,14 @@ $(async function(){
             clearInterval(intervalo);
             let graf=  document.getElementById('graf').style.display="none"
         }
-    })
+        })
+        $('#btn1').on('load', function(){
+            
+            var current= $('#current').val()
+            $('#btn1').text('ssssadasdasdad');
+
+            alert("ctm")
+        })
 
 })
 function fajax(){
@@ -67,7 +73,7 @@ function fajax(){
                 </tr>
                 `)
             });
-            console.log(sensors);
+            //console.log(sensors);
         }
     })
 }

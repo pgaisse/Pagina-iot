@@ -1,6 +1,6 @@
 const mongoose =   require('mongoose');
 var moment = require('moment');
-
+const mongoosePaginate= require('mongoose-paginate-v2');
 const { Schema }  =   mongoose;
 
 const SensorSchema =  new Schema({
@@ -11,4 +11,5 @@ const SensorSchema =  new Schema({
     user:{type: String, required: false},
     topic: {type: String, require: true}
 });
+
 module.exports=mongoose.model('Sensor', SensorSchema);

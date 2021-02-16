@@ -79,8 +79,8 @@ async function mqtt_p(){
         password: 'telemetria.2021' 
     });
     await client.on('connect', async(req,res) =>{
-        await client.subscribe('+/sensores/#')
-        await client.subscribe('+/actuadores/#')
+        await client.subscribe('+/Sensor/#')
+        await client.subscribe('+/Actuador/#')
         //await client.subscribe('patricio/sensores/#')
     const top1= client._resubscribeTopics;
     console.log("suscrito a : ",top1);

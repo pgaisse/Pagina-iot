@@ -1,6 +1,6 @@
 <div class="container">
     <div class="row mt-4">
-        <div class="col-md-6 mx-auto">
+        <div class="col-md-12 mx-auto">
             <div class="card">
                 <div class="card-header">
                     <h1>Búsqueda de mensajes</h1>
@@ -13,6 +13,7 @@
                          <div class="form-group">
                         <!--<input type="text" name="topic" class="form-control" placeholder="Topic">-->
                             <select class="browser-default custom-select form-control " name="topic">
+                                {{sensors}}
                                 <option selected="" disabled>Topic</option>
                                 {{#each topicos}}
                                 <option value="{{this}}">{{this}}</option>
@@ -71,18 +72,31 @@
                         <label class="form-check-label" for="flexSwitchCheckChecked">Refrescar automáticamente</label>
                         </div>
                     </div>
-                    <div class="col-md-3">
-
+                    <div class="col-md-1">
+                
                     </div>
+                    <div class="col-md-7">                         
+                        <div class="dropdown mx-auto">                            
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">                           </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="?limit=10">10</a>
+                                <a class="dropdown-item" href="?limit=50">50</a>
+                                <a class="dropdown-item" href="?limit=100">100</a>
+                            </div>
+                            {{sensors.page}} - {{sensors.limit}} de {{sensors.totalDocs}}
+                        </div>                        
+                    </div>                    
                 </div>
 
+                
                 
                 <table class="table table-dark table-hover">
                     <thead>
                         <tr align="center"><th scope="col">ID</th><th scope="col">Status</th><th scope="col">value</th><th scope="col">Topic</th><th scope="col">Fecha</th></tr>
                     </thead>
                     <tbody id="tbody">
-                        {{#each sensors as |sensor|}}
+                        {{sensor.docs._id}}
+                        {{#each sensors.docs as |sensor|}}
                             <tr id="fila" align="center">        
                                 <th>{{sensor._id}}</th><td>{{sensor.status}}</td><td>{{sensor.value}}</td><td>{{sensor.topic}}</td><td scope="row">{{sensor.date}}</td>
                             

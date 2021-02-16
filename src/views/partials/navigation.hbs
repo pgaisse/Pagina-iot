@@ -26,20 +26,29 @@
         </li>
         {{/if}}
 {{#if user}}
-                <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            iot
+                  
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle fas fa-tablet-alt" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-
-            <li><a class="dropdown-item" href="/iot">Todo los Registros</a></li>
-            <li><a class="dropdown-item" href="/iot/add">Agregar Registro</a></li>
+            <li><a class="dropdown-item far fa-clipboard" href="/iot">&nbsp;Registros</a></li>
             <li><hr class="dropdown-divider"></li>
-            
-            <li><a class="dropdown-item" href="/users/logout">Log out</a></li>
-          {{/if}}
+            <li><a class="fas fa-plus-circle dropdown-item " href="/iot/add">&nbsp; <label style="font-weight: normal;">Agregar Disositivo</label> </a></li>
+
+
           </ul>
         </li>
+            <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle far fa-user" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item fas fa-cog " href="/iot/panel">&nbsp;<label style="font-weight: normal;"> Panel</label></a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item fas fa-sign-out-alt" href="/users/logout"> &nbsp;<label style="font-weight: normal;"> Log out </label></a></li>
+            </ul>
+            
+            </li>    
+            
+        {{/if}}
             </ul>
         </div>
     </div>
