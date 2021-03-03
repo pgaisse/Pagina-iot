@@ -1,0 +1,93 @@
+<div class="card-block">
+    <div class="col md-2">
+        <div class="card-block tree-view">
+                <div id="basicTree">                
+                    <ul>
+                        <li data-jstree='{"opened":true}'>{{#each user}}{{name}}{{/each}}
+                            <ul>
+                                <li data-jstree='{"opened":true}'>Sensors
+                                    
+                                    <ul>{{#each topicoss}}
+                                        <li onclick="datostopic('{{{topic}}}')" data-jstree='{"type":"file"}' >{{name}}</li>
+                                        {{/each}}
+                                        
+                                    </ul>
+                                    
+                                </li>
+                                    <li data-jstree='{"opened":true}'>Devices
+                                    <ul>{{#each topicosd}}
+                                            <li onclick="actiontopicget('{{{name}}}','{{{topic}}}')" data-jstree='{"type":"file"}'>{{name}}</li>
+                                        {{/each}}
+                                        
+                                    </ul>
+                                </li>
+                            </ul>
+                            
+                        </li>
+                    </ul>
+                </div>
+        </div>
+    </div>
+    <div class="row" style="display: none;" id="content-but">
+        <div class="col-xl-8 col-md-8 mx-auto">
+            <div class="card bg-c-blue update-card" id="idcuadros1">
+                <div class="card-block">
+                    <div class="row align-items-end mx-auto">
+                        <div class="mx-auto">
+                            <h4 class="text-white" id="topich4"></h4>
+                            <h4 class="text-white" id="valueh4"></h4>
+                            <div class="d-flex flex-row justify-content-center alig-items-center">
+                                <button type="button" onclick="actiontopicset(1)" class="btn btn-success mx-40 ">ON</button>&nbsp;
+                                <button type="button" onclick="actiontopicset(0)" class="btn btn-danger">OFF</button>
+                            </div>
+                        </div>
+                        <div class="col-8 text-right">
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <p class="text-white m-b-0"><div  id="dateup1last"></div></br><div class="feather icon-clock text-white f-14 m-r-10" id="dateup2" >&nbsp;update :</div></p>
+                </div>
+            </div>
+        </div>  
+    </div>
+    <div class="col md-10 px-5">
+         <div  class="chartgraf" id="sales-analytics" style="height: 300px;"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 mx-auto">
+            <div class="card" id="cardgraphshow" style="display: none;">
+                <div class="card-header">
+                    <h4>Búsqueda Avanzada</h4>
+                </div>
+                <div class="card-body" >
+                    <form id="formgraphshow" >
+                        <div class="form-group row">
+                            <div class="col-md-3 ">
+                                Startin Date:<input type="datetime-local" name="date1" class="form-control" id="date1" value="">
+                            </div>
+                            <div class="col-md-3 ">
+                                Ending Date<input type="datetime-local" class="form-control" name="date2" id="date2" value="">
+                            </div>
+                            <div class="col-md-2 ">
+                                Min Value:<input type="number" class="form-control" min="0" max="1000" placeholder="Value Min" id="vmin" name="vmin">
+                            </div>
+                            <div class="col-md-2 ">
+                                Max Value:<input type="number" class="form-control" min="0" max="1000" placeholder="Value Max" id="vmax" name="vmax">
+                            </div>
+                             <div class="col-md-2 ">
+                                Interval Second:<input type="number" class="form-control" min="0" max="59" placeholder="Interval" id="interval" name="interval">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button  class="btn btn-primary">
+                                Buscar
+                            </button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

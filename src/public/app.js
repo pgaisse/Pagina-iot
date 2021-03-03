@@ -4,10 +4,10 @@ var topicc, sensorn;
 const Arry=[];
 const Arrx=['', '','','','','','','','',''];
 const estado=['OFF','ON'];
-$(document).on("change",'#myRange', function (e){
-    let res=e.target.value;
-    $('#slidelabel').text(res);
-})
+
+
+
+
 
 $(async function(){
         $('#btn-refresh').on('change',function(){
@@ -22,15 +22,73 @@ $(async function(){
             let graf=  document.getElementById('graf').style.display="none"
         }
         })
-        $('#btn1').on('load', function(){
-            
-            var current= $('#current').val()
-            $('#btn1').text('ssssadasdasdad');
-
-            alert("ctm")
-        })
+        $('#btn-refresh2').on('change',function(){
+            var mode= $(this).prop('checked');
+            if(mode){
+                cargarwidget();
+                intervalo =setInterval(cargarwidget, 1000);
+    
+            }
+            else{
+                clearInterval(intervalo);
+                let graf=  document.getElementById('graf').style.display="none"
+            }
+            })
 
 })
+
+
+function cargarwidget(){
+    date = new Date()
+    $.ajax({
+        url: '../iot/g-view-ajax',
+        success: function (sensors){
+            let statuss1=$('#s1')
+            let dateup1=$('#dateup1')
+            let dateup1last=$('#dateup1last')
+            let statuss2=$('#s2')
+            let dateup2=$('#dateup2')
+            let idcuadros1=$('#idcuadros1');
+            console.log(sensors)
+            statuss1.text('');
+            dateup1.text('');
+            
+            sensors.lastopen.forEach(lo=>{
+                var last=new Date(lo.date);
+                dateup1last.text(" last opening " + last.getHours()+":"+last.getMinutes()+":"+last.getSeconds())
+            })
+
+            sensors.sp.forEach(sp=>{
+                var dateday=new Date(sp.date);
+                var values1=sp.value;
+                idcuadros1.removeClass("bg-c-green") || idcuadros1.removeClass("bg-c-pink")
+                if(values1==1){
+                    statuss1.text("Abierta");
+                    idcuadros1.addClass('card  bg-c-green update-card')
+                }
+                else{
+                    statuss1.text("Cerrada");
+                    idcuadros1.addClass("card  bg-c-pink update-card")
+                }
+                dateup1.append(" update : " + dateday.getHours()+":"+dateday.getMinutes()+":"+dateday.getSeconds());
+            })
+            sensors.st.forEach(st=>{
+                var dateday2=new Date(st.date);
+                var values2=st.value;
+                statuss2.text(values2);
+                dateup2.text(" update : " + dateday2.getHours()+":"+dateday2.getMinutes()+":"+dateday2.getSeconds());
+            })
+            
+        }
+        
+    })
+}
+
+
+
+
+
+
 function fajax(){
     date = new Date()
     $.ajax({
@@ -39,8 +97,49 @@ function fajax(){
             let tbody = $('tbody');
             let graf=  document.getElementById('graf').style.display="block"
             let tabla= document.getElementById('tbody')
+            let statuss1=$('#s1')
+            let dateup1=$('#dateup1')
+            let dateup1last=$('#dateup1last')
+            let statuss2=$('#s2')
+            let dateup2=$('#dateup2')
+            let idcuadros1=$('#idcuadros1');
+            let idcuadros2=$('#idcuadros2');
+            statuss1.text('');
+            dateup1.text('');
+            
+            sensors.lastopen.forEach(lo=>{
+                //alert(lo.date)
+                var last=new Date(lo.date);
+                dateup1last.text(" last opening " + last.getHours()+":"+last.getMinutes()+":"+last.getSeconds())
+            })
+
+            sensors.sp.forEach(sp=>{
+                var dateday=new Date(sp.date);
+                var values1=sp.value;
+                idcuadros1.removeClass("bg-c-green") || idcuadros1.removeClass("bg-c-pink")
+                if(values1==1){
+                    statuss1.text("Abierta");
+                    idcuadros1.addClass('card  bg-c-green update-card')
+                }
+                else{
+                    statuss1.text("Cerrada");
+                    idcuadros1.addClass("card  bg-c-pink update-card")
+                }
+                dateup1.append(" update : " + dateday.getHours()+":"+dateday.getMinutes()+":"+dateday.getSeconds());
+            })
+
+            
+            sensors.st.forEach(st=>{
+                var dateday2=new Date(st.date);
+                var values2=st.value;
+                statuss2.text(values2);
+                dateup2.text(" update : " + dateday2.getHours()+":"+dateday2.getMinutes()+":"+dateday2.getSeconds());
+            })
+           
+            var index=0;
             sensors.sensors.forEach(sensor => {
                 var dat= new Date(sensor.date)
+                
                 topicc=sensor.topic;
                 sensorn=sensor.name;
                 if(i==0){
@@ -64,11 +163,10 @@ function fajax(){
                 cha(sensors,sensor.status,dat);
                 
                 tbody.append(`
-                <tr id='trr' align='center'>
-                    <th scope="row">${sensor._id}</th>  
-                    <td>${sensor.status}</td>
-                    <td>${sensor.value}</td>
+                <tr>
+                    <th scope="row">${index}</th>  
                     <td>${sensor.topic}</td>
+                    <td>${sensor.value}</td>
                     <td>${dat}</td>
                 </tr>
                 `)

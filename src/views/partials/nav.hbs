@@ -1,0 +1,88 @@
+<nav class="pcoded-navbar">
+                        <div class="pcoded-inner-navbar main-menu">
+                            <div class="pcoded-navigatio-lavel">Navigation</div>
+                            <ul class="pcoded-item pcoded-left-item">
+
+								 <li class="pcoded-hasmenu active pcoded-trigger">
+                                    <a href="#">
+                                        <span class="pcoded-micon"><i class="feather icon-menu"></i></span>
+                                        <span class="pcoded-mtext">Navigation</span>
+                                    </a>
+									<ul class="pcoded-submenu">
+                                        <li class="active">
+                                            <a href="/">
+                                                <span class="pcoded-mtext">Home</span>
+                                            </a>
+                                        </li>
+                                        <li class="">
+                                            <a href="/services">
+                                                <span class="pcoded-mtext">Services</span>
+                                            </a>
+                                        </li>
+                                        <li class=" ">
+                                            <a href="/about">
+                                                <span class="pcoded-mtext">About</span>
+                                               
+                                            </a>
+                                        </li>
+                                        {{#if user}}
+                                        <li class=" ">
+                                            <a href="/users/logout">
+                                                <span class="pcoded-mtext">Log out</span>
+                                               
+                                            </a>
+                                        </li>
+                                        {{else}}
+                                        <li class=" ">
+                                            <a href="/users/signin">
+                                                <span class="pcoded-mtext">Sign in</span>
+                                               
+                                            </a>
+                                        </li>
+                                        {{/if}}
+                                    </ul>
+                                </li>
+                                 {{#if user}}
+                                <li class="pcoded-hasmenu active">
+                                    <a href="javascript:void(0)">
+                                        <span class="pcoded-micon"><i class="feather icon-home"></i></span>
+                                        <span class="pcoded-mtext">User Panel</span>
+                                    </a>
+                                    <ul class="pcoded-submenu">
+                                        <li class="active">
+                                            <a href="/iot/devices">
+                                                <span class="pcoded-mtext">Devices</span>
+                                            </a>
+                                        </li>
+                                        <li class="">
+                                            <a href="/iot/prueba">
+                                                <span class="pcoded-mtext">Actions</span>
+                                            </a>
+                                        </li>
+                                        <li class="">
+                                            <a href="/iot">
+                                                <span class="pcoded-mtext">Records and Graphics(*)</span>
+                                            </a>
+                                        </li>
+                                        <li class=" ">
+                                            <a href="/iot/g-view">
+                                                <span class="pcoded-mtext">General View</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                {{/if}}
+                               
+                               
+                            </ul>
+                            <div class="pcoded-navigatio-lavel">App</div>
+                            <ul class="pcoded-item pcoded-left-item">
+                                
+                            </ul>
+                            
+                            <div class="pcoded-navigatio-lavel">Other</div>
+                            <ul class="pcoded-item pcoded-left-item">
+                            
+                            </ul>
+                        </div>
+                    </nav>

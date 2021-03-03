@@ -1,0 +1,58 @@
+<div class="col-md-4">
+                        <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="btn-refresh2" unchecked />
+                        <label class="form-check-label" for="flexSwitchCheckChecked">Refrescar automáticamente</label>
+                        </div>
+                    </div>
+
+<div class="row" id="rgview">
+    <div class="col-xl-3 col-md-6">
+        {{#each sp}}
+            {{#ifCond value 1}}
+            
+                <div class="card  bg-c-green update-card" id="idcuadros1">
+            
+            {{else}}
+                <div class="card bg-c-lite-green update-card" id="idcuadros1"> 
+            {{/ifCond}}
+        {{/each}}
+        
+            <div class="card-block">
+                <div class="row align-items-end">
+                    <div class="col-8">
+                        <h4 class="text-white" id="s1">{{#each sp}}{{#ifCond value 1}} Abierta {{else}} Cerrada {{/ifCond}}{{/each}}</h4>
+                        <h6 class="text-white m-b-0">Puerta Principal</h6>
+                    </div>
+                    <div class="col-4 text-right">
+                        <canvas id="update-chart-2" height="50"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <p class="text-white m-b-0"><div class="fas fa-glasses " id="dateup1last">&nbsp; last openning: &nbsp;{{#each lastopen}}{{#dateday date}}{{/dateday}}{{/each}}</div></br><div class="feather icon-clock text-white f-14 m-r-10" id="dateup1" >&nbsp;update :{{#each sp}}{{#dateday date}}{{/dateday}}{{/each}}</div></p>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <div class="col-xl-3 col-md-6">
+        <div class="card bg-c-yellow update-card" id="idcuadros1">
+            <div class="card-block">
+                <div class="row align-items-end">
+                    <div class="col-8">
+                        <h4 class="text-white" id="s2">{{#each st}}{{value}}{{/each}}</h4>
+                        <h6 class="text-white m-b-0">Temperatura Casa</h6>
+                    </div>
+                    <div class="col-4 text-right">
+                        <canvas id="update-chart-3" height="50"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <p class="text-white m-b-0"><div  id="dateup1last"></div></br><div class="feather icon-clock text-white f-14 m-r-10" id="dateup2" >&nbsp;update :{{#each sp}}{{#dateday date}}{{/dateday}}{{/each}}</div></p>
+            </div>
+        </div>
+    </div>  
+</div>

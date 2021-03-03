@@ -11,6 +11,7 @@ passport.use(new LocalStrategy({usernameField: 'email'},async (email,password,do
        const match = await user.matchPassword(password);
        if(match){
            console.log('Ha ingresado satisfactoriamente');
+
            return done(null, user);
        }else{
            return done(null, false, {message: 'Password incorrecta'});
